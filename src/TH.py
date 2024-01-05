@@ -49,6 +49,8 @@ th.data[['Month']].value_counts().reset_index().\
         sort_values(by = 'Month').set_index('Month').boxplot(ax = ax)
 plt.savefig('DistribMonthTrainig.jpeg' )
 plt.show()
+
+
 # Equipment
 th.load('THEquipment.xlsx')
 th.data['DateCreated'] = th.data.Created.apply(lambda x: x.date())
@@ -61,3 +63,19 @@ days.apply(lambda x: x.days).plot.box(ax = ax)
 plt.savefig('../figs/Time2Equipment.jpeg')
 plt.show()
 
+# MHV
+th.load('MHVStaffAddModificationRequest.xlsx')
+object = th.data.Month.reset_index().groupby('Month').count()
+th.barh_graph(object,'MHV_Staff_Add_Request.jpeg')
+
+# MHV
+th.load('MHV_TRIAGE_TEAM_NEW_REMOVE_REQUESTS .xlsx')
+th.data['Month'] = th.data.Created.apply(lambda x: x.date().month)
+th.data['Month'].reset_index().groupby('Month').count()
+th.barh_graph(object,'MonthlyTriageTeamRemoveReqs.jpeg')
+
+#MHV
+th.load('MHVAddRemovePatientRequests .xlsx')
+th.data['Month'] = th.data.Created.apply(lambda x: x.date().month)
+object = th.data['Month'].value_counts().reset_index().sort_values('Month').set_index('Month')
+th.barh_graph(object,"AddRemovePatient.jpeg")
